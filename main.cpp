@@ -26,6 +26,5 @@ int main(int argc,char** argv)
 			cout << "KO" << endl;
 	}
 
-
 	return(1);
 }

@@ -37,13 +37,33 @@ bool expression::equilibre(char* filename)
     while(!file.eof())
         file >> c;
         
-    Ces instructions ont la signification suivante. Tant que l'on a pas atteint la fin fichier, lire le caractère courant est le mettre dans c.
+    Ces instructions ont la signification suivante. Tant que l'on a pas atte la fin fichier, lire le caractère courant est le mettre dans c.
     eof() est une méthode de la classe ifstream indiquant la fin du fichier.
     
     La fermeture après utilisation du fichier se fait par l'appel :
     file.close()
     */
-    
-    return(true);
 
+    file.open(filename, std::ifstream::in);
+    char c;
+    file >> c;
+
+    while(!file.eof()){
+        if(c == '(' || c == '[' || c == '{') {
+            pile.push(c);
+            } else if(c == ')' || c == ']' || c == '}') {
+            if(pile.empty()) {
+                return(false);
+                } else {
+                    char top = pile.top();
+                    if((c == ')' && top == '(') || (c == ']' && top == '[') || (c == '}' && top == '{')) {
+                        pile.pop();
+                    } else {
+                        return(false);
+                    }
+                }
+        }
+        file >> c;
+    }
+    return(true);
 }
